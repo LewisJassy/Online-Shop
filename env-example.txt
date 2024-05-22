@@ -1,7 +1,9 @@
-SECRET_KEY=
-DB_URI="sqlite:///test.db"
-EMAIL=
-PASSWORD=
-STRIPE_PUBLIC=
-STRIPE_PRIVATE=
-ENDPOINT_SECRET=
+{
+    SECRET_KEY= "82d90a96b57fb0bb67c4a5b77a79f85f6b29d2cea3aa2bd36001adeb552a60da"
+    DB_URI="sqlite:///test.db"
+    EMAIL= "lewisjassy43@gmail.com"
+    PASSWORD= "lewis_njaci"
+    STRIPE_PUBLIC=
+    STRIPE_PRIVATE=
+    ENDPOINT_SECRET="82d90a96b57fb0bb67c4a5b77a79f85f6b29d2cea3aa2bd36001adeb552a60de"
+}
