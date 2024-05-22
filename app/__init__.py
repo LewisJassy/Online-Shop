@@ -1,4 +1,4 @@
-import os, stripe, json
+import os, json
 from datetime import datetime
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_bootstrap import Bootstrap
@@ -24,7 +24,7 @@ app.config['MAIL_PASSWORD'] = os.environ["PASSWORD"]
 app.config['MAIL_SERVER'] = "smtp.googlemail.com"
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_PORT'] = 587
-stripe.api_key = os.environ["STRIPE_PRIVATE"]
+# stripe.api_key = os.environ["STRIPE_PRIVATE"]
 
 Bootstrap(app)
 db.init_app(app)
@@ -205,34 +205,34 @@ def create_checkout_session():
 		return str(e)
 	return redirect(checkout_session.url, code=303)
 
-@app.route('/stripe-webhook', methods=['POST'])
-def stripe_webhook():
+# @app.route('/stripe-webhook', methods=['POST'])
+# def stripe_webhook():
 
-	if request.content_length > 1024*1024:
-		print("Request too big!")
-		abort(400)
+# 	if request.content_length > 1024*1024:
+# 		print("Request too big!")
+# 		abort(400)
 
-	payload = request.get_data()
-	sig_header = request.environ.get('HTTP_STRIPE_SIGNATURE')
-	ENDPOINT_SECRET = os.environ.get('ENDPOINT_SECRET')
-	event = None
+# 	payload = request.get_data()
+# 	sig_header = request.environ.get('HTTP_STRIPE_SIGNATURE')
+# 	ENDPOINT_SECRET = os.environ.get('ENDPOINT_SECRET')
+# 	event = None
 
-	try:
-		event = stripe.Webhook.construct_event(
-		payload, sig_header, ENDPOINT_SECRET
-		)
-	except ValueError as e:
-		# Invalid payload
-		return {}, 400
-	except stripe.error.SignatureVerificationError as e:
-		# Invalid signature
-		return {}, 400
+# 	try:
+# 		event = stripe.Webhook.construct_event(
+# 		payload, sig_header, ENDPOINT_SECRET
+# 		)
+# 	except ValueError as e:
+# 		# Invalid payload
+# 		return {}, 400
+# 	except stripe.error.SignatureVerificationError as e:
+# 		# Invalid signature
+# 		return {}, 400
 
-	if event['type'] == 'checkout.session.completed':
-		session = event['data']['object']
+# 	if event['type'] == 'checkout.session.completed':
+# 		session = event['data']['object']
 
-		# Fulfill the purchase...
-		fulfill_order(session)
+# 		# Fulfill the purchase...
+# 		fulfill_order(session)
 
-	# Passed signature verification
-	return {}, 200
+# 	# Passed signature verification
+# 	return {}, 200
